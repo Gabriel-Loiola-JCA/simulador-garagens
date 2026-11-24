@@ -30,7 +30,7 @@ São considerados apenas custos incluídos no valor/km informado. Não são incl
 
 ## Interface e dados
 
-Interface em cinza, sem ícone no cabeçalho, com impressão e modo claro. Mapas ficam recolhidos e podem ser ampliados, sem os painéis das capturas e com bordas arredondadas. Dados são salvos somente no navegador quando disponível. Não há envio automático de simulações a um servidor.
+Interface em cinza, sem ícone no cabeçalho, com impressão e modo claro. Os dois mapas ficam no topo. Logo abaixo de cada imagem, aparecem a distância editável e os cálculos de KM ocioso e custo por dia, semana, mês e anos. Os mapas podem ser ampliados, sem os painéis das capturas e com bordas arredondadas. Dados são salvos somente no navegador quando disponível. Não há envio automático de simulações a um servidor.
 
 ## Verificação
 
