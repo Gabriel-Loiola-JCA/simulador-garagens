@@ -1,50 +1,41 @@
-# Simulador de decisão de garagem
+# Custo de KM ocioso
 
-Comparativo operacional da garagem atual da Viação Cometa e da garagem UTIL, partindo da Rodoviária de Juiz de Fora. Interface em português, sem ícone no cabeçalho, com tons de cinza e mapas ampliáveis com bordas arredondadas. O recorte da interface mostra somente a área do mapa, retirando o painel lateral e a barra superior da captura fornecida.
+Comparativo enxuto para apresentar o custo adicional da mudança da garagem Cometa para a UTIL, partindo da Rodoviária de Juiz de Fora.
 
 ## Abrir
 
-Baixe o arquivo `index.html` e abra no navegador. O arquivo contém as imagens e funciona sem dependências externas. Também pode ser servido por qualquer hospedagem estática.
+Baixe `index.html` e abra no navegador. As imagens estão incorporadas; não há dependências externas.
 
-Para uma prévia local:
+## Informar
 
-```sh
-python -m http.server 8080
-```
+- Distâncias por trecho: inicialmente 1,7 km (Cometa) e 10,8 km (UTIL), conforme imagens fornecidas.
+- Viagens por dia e frequência dos acessos à garagem.
+- Custo por KM ocioso em R$/km.
+- Dias de operação por semana e mês e meses por ano.
+- Opcionalmente, passageiros pagantes por dia, tarifa média e margem disponível por passagem.
 
-Depois abra `http://localhost:8080`.
+O painel mostra custo atual, custo UTIL e diferença no dia, semana, mês e horizonte de 1, 2, 3, 5 ou 10 anos. As projeções multiplicam um dia padrão pelos períodos informados, sem inflação automática. Os dias informados são premissas editáveis; não há calendário de viagens individuais.
 
-## Usar
-
-1. Configure as distâncias, os consumos, os custos fixos e o percurso comercial da linha.
-2. Informe viagens e passageiros totais em cada dia da semana e a frequência dos acessos à garagem.
-3. Defina o diesel base e altere seu percentual ou o preço simulado.
-4. Compare custos diários, semanais e mensais, o impacto acumulado e o reajuste por passagem.
-5. Cadastre custos adicionais e cálculos próprios. As fórmulas aceitam soma, subtração, multiplicação, divisão, porcentagem e parênteses. Resultados anteriores podem ser usados por `calc_1`, `calc_2` etc.
-
-As distâncias iniciais são 1,7 km para a Cometa e 10,8 km para a UTIL, por trecho, conforme as imagens fornecidas. Diesel de R$ 6,20/L e consumo de 2,5 km/L são premissas demonstrativas editáveis, sem cotação externa. O botão **Carregar exemplo** preenche uma simulação ilustrativa.
+A seção opcional de diesel estima **somente combustível** por quilômetro: preço por litro × (1 + variação percentual) ÷ km/L. Preço de R$ 6,20 e consumo de 2,5 km/L são exemplos, sem cotação externa.
 
 ## Cálculos
 
-- O calendário mensal conta as ocorrências reais dos dias da semana.
-- A programação semanal é repetida nos meses do horizonte escolhido, de 1 a 120 meses.
-- O comparativo separa mudança de garagem e aumento do diesel.
-- O reajuste da mudança considera a diferença recorrente, a recuperação do investimento e os percentuais de passageiros reajustáveis e receita retida.
-- A tarifa de equilíbrio da linha considera todos os custos cadastrados; preencha o percurso comercial e os demais gastos para analisar a linha completa.
-- O investimento inicial entra uma única vez no custo acumulado.
-- Custos mensais são rateados por dias corridos nas visões diária e semanal.
-- As fórmulas são interpretadas por um analisador matemático restrito, sem executar código JavaScript informado pelo usuário.
+KM ocioso/dia = distância por trecho × acessos à garagem.
 
-## Dados
+Custo/dia = KM ocioso/dia × R$/km. Semana = dia × dias/semana. Mês = dia × dias/mês. Ano = mês × meses/ano.
 
-As simulações ficam no armazenamento local do navegador, quando disponível. **Salvar simulação** e **Abrir simulação** exportam e importam JSON. O relatório pode ser exportado em CSV ou impresso. Não há envio automático de dados a um servidor.
+Adicional por passageiro = diferença diária de custo ÷ passageiros pagantes/dia. O percentual sobre a tarifa mostra o peso do adicional. A avaliação de capacidade de absorção usa a margem informada após os custos atuais da linha; a tarifa, sozinha, não indica lucro disponível.
+
+São considerados apenas custos incluídos no valor/km informado. Não são incluídos percurso comercial nem investimento da mudança. O aumento estimado é arredondado para cima no centavo e cobre apenas o adicional calculado.
+
+## Interface e dados
+
+Interface em cinza, sem ícone no cabeçalho, com impressão e modo claro. Mapas ficam recolhidos e podem ser ampliados, sem os painéis das capturas e com bordas arredondadas. Dados são salvos somente no navegador quando disponível. Não há envio automático de simulações a um servidor.
 
 ## Verificação
-
-Com Node.js instalado:
 
 ```sh
 node tests/engine.cjs
 ```
 
-O conjunto verifica calendário, custo, diesel, tarifa, rateio, investimento, horizonte, retorno, fórmulas e validação de arquivos importados.
+Os testes cobrem quilometragem, custos, projeções, frequência dos acessos, diesel, passagem, margem e validação das premissas.
