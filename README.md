@@ -39,3 +39,11 @@ node tests/engine.cjs
 ```
 
 Os testes cobrem quilometragem, custos, projeções, frequência dos acessos, diesel, passagem, margem e validação das premissas.
+
+## Receita e relatórios
+
+O comparativo calcula receita (tarifa × pagantes × dias), saldo após custo ocioso e resultado da linha com a margem disponível informada. Resultados negativos aparecem em vermelho, positivos em verde. O saldo após custo ocioso não inclui os demais custos da linha.
+
+Os botões PDF, PowerPoint e Excel geram relatórios locais com a simulação atual. Excel inclui premissas e fórmulas com resultados calculados. As bibliotecas jsPDF, SheetJS e PptxGenJS estão incorporadas no HTML com seus avisos de licença. Os dados não são enviados a serviços de exportação.
+
+Dropdowns têm estilo próprio e navegação por teclado. As animações usam blur e respeitam a preferência por movimento reduzido.

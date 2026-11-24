@@ -3,7 +3,7 @@ const path=process.argv[2]||'index.html';
 const source=fs.readFileSync(path,'utf8');
 const scripts=[...source.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/g)].map(m=>m[1]);
 scripts.forEach(s=>new vm.Script(s));
-const ctx=vm.createContext({});vm.runInContext(scripts[0]+';globalThis.E=Idle;',ctx);const E=ctx.E;
+const ctx=vm.createContext({});vm.runInContext(source.match(/<script id="engine">([\s\S]*?)<\/script>/)[1]+';globalThis.E=Idle;',ctx);const E=ctx.E;
 let checks=0;function equal(a,b){assert.equal(a,b);checks++}function near(a,b){assert.ok(Math.abs(a-b)<1e-7,`${a} != ${b}`);checks++}
 let s=E.defaults(),a=E.calculate(s);equal(a.ready,false);equal(a.delta,null);equal(a.perPax,null);equal(a.periods[2].delta,null);
 s.trips=10;s.rate=5;s.passengers=300;s.fare=80;s.margin=2;a=E.calculate(s);near(a.legs,20);near(a.currentKm,34);near(a.utilKm,216);near(a.deltaKm,182);near(a.current,170);near(a.util,1080);near(a.delta,910);near(a.periods[1].delta,5460);near(a.periods[2].delta,23660);near(a.periods[3].delta,283920);near(a.perPax,910/300);near(a.share,910/300/80*100);near(a.raise,3.04);near(a.newFare,83.04);near(a.marginAfter,2-910/300);
